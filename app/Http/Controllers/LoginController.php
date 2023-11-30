@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
@@ -21,17 +22,26 @@ class LoginController extends Controller
         $get_username = $request->username;
         $get_password = $request->password;
 
-        //$datas = DB::table('admin')->where('username', 'LIKE', $get_username, 'AND', 'password', 'LIKE', $get_password)->first();
-        //$datas = DB::table('admin')->where('username', '=', $get_username, 'AND', 'password', '=', $get_password)->first();
-        $usr = DB::table('account')->where('username', '=', $get_username)->first();
-        $pas = DB::table('account')->where('password', '=', $get_password)->first();
 
-        if(is_null($usr) or is_null($pas))
+        $datas = DB::select('SELECT * FROM account WHERE username = ? AND password = ?', [$get_username, $get_password]);
+        
+
+        if(empty($datas))
         {
             return redirect()->route('login.create')->with('danger', 'Failed to Log In!');
         }  
         else{
+            Session::put('user', $datas[0]); // Assuming the first result represents the user data
             return redirect()->route('home.index')->with('success', 'Welcome!');
         }
+    }
+
+    public function logout()
+    {
+        // Clear the user data from the session
+        Session::forget('user');
+
+        // Redirect to the login page with a success message
+        return redirect()->route('login.create')->with('success', 'Successfully logged out.');
     }
 }

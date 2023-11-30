@@ -7,8 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
-{
-
+{ 
     public function index()
     {
         $datas = DB::table('reservasi')

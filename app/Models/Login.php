@@ -13,7 +13,7 @@ class Home extends Model
      *
      * @var string
      */
-    protected $table = 'akun';
+    protected $table = 'account';
     /**
      * The attributes that aren't mass assignable.
      *

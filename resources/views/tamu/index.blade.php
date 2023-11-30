@@ -4,7 +4,7 @@
 <a href="{{ route('tamu.index') }}" type="button" class="btn btn rounded-3">Data Tamu</a>
 <a href="{{ route('kamar.index') }}" type="button" class="btn btn rounded-3">Data Kamar</a>
 <a href="{{ route('reservasi.index') }}" type="button" class="btn btn rounded-3">Data Reservasi</a>
-<a href="{{ route('login.create') }}" type="button" class="btn btn-danger rounded-3" style="float:right">Log Out</a>
+<a href="{{ route('login.logout') }}" type="button" class="btn btn-danger rounded-3" style="float:right">Log Out</a>
 <div style="margin-top: 15px">
     <div style="margin-bottom: -70px">
         <div style="float:right">
