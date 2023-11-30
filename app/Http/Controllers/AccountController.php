@@ -30,35 +30,35 @@ class AccountController extends Controller
         return view('account.add');
     }
 
-    public function store(Request $request) {
-        $request->validate([
-            'id' => 'required',
-            'username' => 'required',
-            'password' => 'required',
-        ]);
+    public function store(Request $request)
+{
+    $request->validate([
+        'id' => 'required',
+        'username' => 'required',
+        'password' => 'required',
+    ]);
 
-        $hashedPassword = Hash::make($request->password);
+    $get_username = $request->username;
+    $hashedPassword = Hash::make($request->password);
 
-        // Menggunakan Query Builder Laravel dan Named Bindings untuk valuesnya
-        DB::insert('INSERT INTO account(id, username, password) VALUES (:id, :username, :password)',
+    // Check if the username already exists in the database
+    $existingUser = DB::select('SELECT * FROM account WHERE username = ?', [$get_username]);
+
+    if (!empty($existingUser)) {
+        return redirect()->route('account.index')->with('success', 'Username telah digunakan');
+    }
+
+    // Insert the new account if the username doesn't exist
+    DB::insert('INSERT INTO account(id, username, password) VALUES (:id, :username, :password)',
         [
             'id' => $request->id,
             'username' => $request->username,
-            'password' => $hashedPassword,            
+            'password' => $hashedPassword,
         ]
-        );
+    );
 
-        // Menggunakan laravel eloquent
-        // Admin::create([
-        //     'id_admin' => $request->id_admin,
-        //     'no_kamar_admin' => $request->no_kamar_admin,
-        //     'alamat' => $request->alamat,
-        //     'username' => $request->username,
-        //     'password' => Hash::make($request->password),
-        // ]);
-
-        return redirect()->route('account.index')->with('success', 'Akun berhasil disimpan');
-    }
+    return redirect()->route('account.index')->with('success', 'Akun berhasil disimpan');
+}
 
     public function edit($id) {
         $data = DB::table('account')->where('id', $id)->first();
@@ -72,8 +72,15 @@ class AccountController extends Controller
             'password' => 'required',
         ]);
 
+        $get_username = $request->username;
         $hashedPassword = Hash::make($request->password);
-        // Menggunakan Query Builder Laravel dan Named Bindings untuk valuesnya
+
+        // Check if the username already exists in the database
+        $existingUser = DB::select('SELECT * FROM account WHERE username = ?', [$get_username]);
+
+        if (!empty($existingUser)) {
+            return redirect()->route('account.index')->with('success', 'Username telah digunakan');
+        }
         DB::update('UPDATE account SET username = :username, password= :password WHERE id = :id',
         [
             'id' => $id,

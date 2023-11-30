@@ -24,7 +24,7 @@
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
-                <input type="text" class="form-control" id="pasword" name="password">
+                <input type="text" class="form-control" id="password" name="password">
             </div>
             <div class="text-center">
                 <input type="submit" class="btn btn-primary" value="Tambah" />
