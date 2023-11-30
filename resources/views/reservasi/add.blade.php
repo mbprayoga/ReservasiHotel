@@ -1,4 +1,4 @@
-@extends('reservasi.layout')
+@extends('layout.layout')
 @section('content')
 @if($errors->any())
 <div class="alert alert-danger">

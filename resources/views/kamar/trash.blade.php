@@ -1,4 +1,4 @@
-@extends('tamu.layout')
+@extends('layout.layout')
 @section('content')
 <a href="{{ route('home.index') }}" type="button" class="btn btn rounded-3">Home</a>
 <a href="{{ route('tamu.index') }}" type="button" class="btn btn rounded-3">Data Tamu</a>

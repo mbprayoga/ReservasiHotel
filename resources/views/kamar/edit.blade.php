@@ -1,4 +1,4 @@
-@extends('kamar.layout')
+@extends('layout.layout')
 
 @section('content')
 

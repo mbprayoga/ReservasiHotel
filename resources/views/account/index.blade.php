@@ -1,20 +1,12 @@
 @extends('layout.layout')
 @section('content')
-<div style="margin-top: 15px">
-    <div style="margin-bottom: -70px">
-        <div style="float:right">
-            <a class="btn btn-outline-primary btn-sm" href="{{ route('kamar.index') }}" type="button">Data Kamar</a>
-            <a class="btn btn-outline-dark btn-sm" href="{{ route('kamar.trash') }}" type="button">Trash</a>
-        </div>
-    </div>
-</div>
-<h4 class="mt-5">Data kamar</h4>
-<a href="{{ route('kamar.create') }}" type="button" class="btn btn-success rounded-3">Add Data</a>
+<h4 class="mt-5">Akun</h4>
+<a href="{{ route('account.create') }}" type="button" class="btn btn-success rounded-3">Add Data</a>
 
 <div class="form-search" style="float:right">
-    <form action="{{ route('kamar.search') }}" method="get" accept-charset="utf-8">
+    <form action="{{ route('account.search') }}" method="get" accept-charset="utf-8">
         <div class="form-group" style="display:flex">
-            <input type="search" id="nama" name="nama" class="form-control" placeholder="Cari Nomor Kamar">
+            <input type="search" id="nama" name="nama" class="form-control" placeholder="Cari Username">
             <button type="submit" class="btn btn-secondary">Search</button>
     </form>
 </div>
@@ -27,40 +19,36 @@
 <table class="table table-hover mt-2">
     <thead>
         <tr>
-            <th>Id Kamar</th>
-            <th>Tipe</th>
-            <th>No.Kamar</th>
-            <th>Harga</th>
+            <th>Id</th>
+            <th>Username</th>
+            <th>Password</th>
             <th>Action</th>
         </tr>
     </thead>
     <tbody>
         @foreach ($datas as $data)
         <tr>
-            <td>{{ $data->id_kamar }}</td>
-            <td>{{ $data->tipe }}</td>
-            <td>{{ $data->no_kamar }}</td>
-            <td>{{ $data->harga }}</td>
+            <td>{{ $data->id }}</td>
+            <td>{{ $data->username }}</td>
+            <td>{{ $data->password }}</td>
             <td>
-                <a href="{{ route('kamar.edit', $data->id_kamar) }}" type="button"
+                <a href="{{ route('account.edit', $data->id) }}" type="button"
                     class="btn btn-warning rounded-3">Edit</a>
-                <!-- TAMBAHKAN KODE DELETE DIBAWAH BARIS INI -->
-                <!-- Button trigger modal -->
                 <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                    data-bs-target="#hapusModal{{ $data->id_kamar }}">
+                    data-bs-target="#hapusModal{{ $data->id }}">
                     Delete
                 </button>
                 <!-- Modal -->
-                <div class="modal fade" id="hapusModal{{ $data->id_kamar }}" tabindex="-1"
+                <div class="modal fade" id="hapusModal{{ $data->id }}" tabindex="-1"
                     aria-labelledby="hapusModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="hapusModalLabel">Confirm</h5>
+                                <h5 class="modal-title" id="hapusModalLabel">Konfirmasi</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
-                            <form method="POST" action="{{ route('kamar.hide', $data->id_kamar) }}">
+                            <form method="POST" action="{{ route('account.delete', $data->id) }}">
                                 @csrf
                                 <div class="modal-body">
                                     Are you sure to delete this data?

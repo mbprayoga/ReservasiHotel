@@ -6,6 +6,7 @@ use App\Http\Controllers\kamarController;
 use App\Http\Controllers\reservasiController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\AccountController;
 use App\Http\Middleware\CustomAuth;
 
 Route::get('/', function () {
@@ -15,12 +16,20 @@ Route::get('/login', [LoginController::class, 'create'])->name('login.create');
 Route::get('/login/store', [LoginController::class, 'store'])->name('login.store');
 
 
+
 Route::group(['middleware'=>['customAuth']],function () {
 //Route::middleware(['auth'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home.index');
     Route::get('/logout', [LoginController::class, 'logout'])->name('login.logout');
 
-    
+    Route::get('/account', [AccountController::class, 'index'])->name('account.index');
+    Route::get('/account/add', [AccountController::class, 'create'])->name('account.create');
+    Route::post('/account/store', [AccountController::class, 'store'])->name('account.store');
+    Route::get('/account/edit/{id}', [AccountController::class, 'edit'])->name('account.edit');
+    Route::post('/account/update/{id}', [AccountController::class, 'update'])->name('account.update');
+    Route::post('/account/delete/{id}', [AccountController::class, 'delete'])->name('account.delete');
+    Route::get('/account/search', [AccountController::class, 'search'])->name('account.search');
+
 
     Route::get('/tamu', [tamuController::class, 'index'])->name('tamu.index');
     Route::get('/tamu/add', [tamuController::class, 'create'])->name('tamu.create');
