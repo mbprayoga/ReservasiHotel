@@ -12,7 +12,11 @@ class kamarController extends Controller
     public function search_trash(Request $request)
     {
         $get_nama = $request->nama;
-        $datas = DB::table('kamar')->where('deleted_at', '<>', '' )->where('no_kamar', 'LIKE', '%'.$get_nama.'%')->get();
+        $datas = DB::select('
+            SELECT *
+            FROM kamar
+            WHERE deleted_at <> "" AND no_kamar LIKE :get_nama
+        ', ['get_nama' => '%' . $get_nama . '%']);
         return view('kamar.trash')
         ->with('datas', $datas);
     }
@@ -36,7 +40,11 @@ class kamarController extends Controller
     {
 
         $get_nama = $request->nama;
-        $datas = DB::table('kamar')->where('deleted_at', NULL )->where('no_kamar', 'LIKE', '%'.$get_nama.'%')->get();
+        $datas = DB::select('
+            SELECT *
+            FROM kamar
+            WHERE deleted_at IS NULL AND no_kamar LIKE :get_nama
+        ', ['get_nama' => '%' . $get_nama . '%']);
         return view('kamar.index')->with('datas', $datas);
     }
     public function index() {

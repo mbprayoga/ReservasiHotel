@@ -12,7 +12,11 @@ class reservasiController extends Controller
     public function search_trash(Request $request)
     {
         $get_nama = $request->nama;
-        $datas = DB::table('reservasi')->where('deleted_at', '<>', '')->where('kode_reservasi', 'LIKE', '%' . $get_nama . '%')->get();
+        $datas = DB::select('
+            SELECT *
+            FROM reservasi
+            WHERE deleted_at <> "" AND kode_reservasi LIKE :get_nama
+        ', ['get_nama' => '%' . $get_nama . '%']);
         return view('reservasi.trash')
             ->with('datas', $datas);
     }
@@ -36,7 +40,11 @@ class reservasiController extends Controller
     {
 
         $get_nama = $request->nama;
-        $datas = DB::table('reservasi')->where('deleted_at', NULL)->where('kode_reservasi', 'LIKE', '%' . $get_nama . '%')->get();
+        $datas = DB::select('
+            SELECT *
+            FROM reservasi
+            WHERE deleted_at IS NULL AND kode_reservasi LIKE :get_nama
+        ', ['get_nama' => '%' . $get_nama . '%']);
         return view('reservasi.index')->with('datas', $datas);
     }
 

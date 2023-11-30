@@ -10,10 +10,12 @@ class HomeController extends Controller
 { 
     public function index()
     {
-        $datas = DB::table('reservasi')
-                ->join('tamu', 'tamu.id_tamu', '=', 'reservasi.id_tamu')
-                ->join('kamar', 'kamar.id_kamar', '=', 'reservasi.id_kamar')
-                ->get();
+        $datas = DB::select('
+            SELECT *
+            FROM reservasi
+            JOIN tamu ON tamu.id_tamu = reservasi.id_tamu
+            JOIN kamar ON kamar.id_kamar = reservasi.id_kamar
+        ');
 
         return view('home.index')
             ->with('datas', $datas);

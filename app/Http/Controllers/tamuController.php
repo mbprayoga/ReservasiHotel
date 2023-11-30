@@ -11,7 +11,11 @@ class tamuController extends Controller
     public function search_trash(Request $request)
     {
         $get_nama = $request->nama_tamu;
-        $datas = DB::table('tamu')->where('deleted_at', '<>', '' )->where('nama', 'LIKE', '%'.$get_nama.'%')->get();
+        $datas = DB::select('
+            SELECT *
+            FROM tamu
+            WHERE deleted_at <> "" AND nama LIKE :get_nama
+        ', ['get_nama' => '%' . $get_nama . '%']);
         return view('tamu.trash')
         ->with('datas', $datas);
     }
@@ -35,7 +39,11 @@ class tamuController extends Controller
     {
 
         $get_nama = $request->nama;
-        $datas = DB::table('tamu')->where('deleted_at', NULL )->where('nama', 'LIKE', '%'.$get_nama.'%')->get();
+        $datas = DB::select('
+            SELECT *
+            FROM tamu
+            WHERE deleted_at IS NULL AND nama LIKE :get_nama
+        ', ['get_nama' => '%' . $get_nama . '%']);
         return view('tamu.index')->with('datas', $datas);
     } 
     public function index() {
