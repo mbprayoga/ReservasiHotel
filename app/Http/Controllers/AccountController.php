@@ -49,9 +49,8 @@ class AccountController extends Controller
     }
 
     // Insert the new account if the username doesn't exist
-    DB::insert('INSERT INTO account(id, username, password) VALUES (:id, :username, :password)',
+    DB::insert('INSERT INTO account(username, password) VALUES (:username, :password)',
         [
-            'id' => $request->id,
             'username' => $request->username,
             'password' => $hashedPassword,
         ]

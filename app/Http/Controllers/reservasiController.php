@@ -58,7 +58,12 @@ class reservasiController extends Controller
 
     public function create()
     {
-        return view('reservasi.add');
+        $tamu = DB::select('select * from tamu where deleted_at is null');
+        $kamar = DB::select('select * from kamar where deleted_at is null');
+        return view('reservasi.add', [
+            'tamu'=> $tamu,
+            'kamar'=> $kamar
+        ]);
     }
 
     public function store(Request $request)

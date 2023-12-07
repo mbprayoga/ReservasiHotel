@@ -18,7 +18,7 @@
         <tr>
             <td>{{ $data->kode_reservasi }}</td>
             <td>{{ $data->nama }}</td>
-            <td>{{ $data->id_kamar }}</td>
+            <td>{{ $data->no_kamar }}</td>
             <td>{{ $data->harga }}</td>
             <td>{{ $data->tanggal_masuk }}</td>
             <td>{{ $data->tanggal_keluar }}</td>

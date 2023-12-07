@@ -15,12 +15,22 @@
         <form method="post" action="{{ route('reservasi.store') }}">
             @csrf
             <div class="mb-3">
-                <label for="id_tamu" class="form-label">ID Tamu</label>
-                <input type="text" class="form-control" id="id_tamu" name="id_tamu">
+                <label for="tamu" class="form-label">Tamu</label>
+                <select class="form-select" aria-label="Default select example" name="id_tamu">
+                    <option selected>Pilih Tamu</option>
+                    @foreach ($tamu as $data)
+                        <option value={{$data->id_tamu}}>{{ $data->nama }}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="mb-3">
-                <label for="id_kamar" class="form-label">ID Kamar</label>
-                <input type="text" class="form-control" id="id_kamar" name="id_kamar">
+                <label for="kamar" class="form-label">Kamar</label>
+                <select class="form-select" aria-label="Default select example" name="id_kamar" >
+                    <option selected>Pilih Kamar</option>
+                    @foreach ($kamar as $data)
+                        <option value={{$data->id_kamar}}>{{ $data->tipe }} no. {{ $data->no_kamar }}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="mb-3">
                 <label for="kode_reservasi" class="form-label">Kode Reservasi</label>
